@@ -1,5 +1,7 @@
 class nodoCola(object):
-    info, sig = None, None
+    def __init__(self):
+        self.info = None
+        self.sig = None
 
 
 
@@ -7,19 +9,20 @@ class Cola(object):
     """Clase Cola"""
     def __init__(self):
         """Crea una cola vacia, tiene tres parametro"""
-        self.frente, self.final = None, None
-        self.tamanio = None
+        self.frente, self.final = None,None
+        self.tamanio = 0
 
     def arribo(cola, dato):
         """Arriba el dato al final de la cola"""
+
         nodo = nodoCola()
         nodo.info= dato
         if cola.frente is None:
-            cola.frente = nodo 
+            cola.frente = nodo
         else:
             cola.final.sig = nodo
-            cola.final = nodo
-            cola.tamanio += 1
+        cola.final = nodo
+        cola.tamanio += 1
     
     def atencion(cola):
         """Antiende el elemento en el frente da la cola y lo devuelve"""
@@ -27,7 +30,7 @@ class Cola(object):
         cola.frente = cola.frente.sig
         if cola.frente is None:
             cola.final = None
-        cola.tamanio -= 1 
+        cola.tamanio -= 1
         return dato
 
     def cola_vacia(cola):
@@ -44,8 +47,8 @@ class Cola(object):
 
     def mover_al_final(cola):
         """Mueve el elemento del frente de la cola al final"""
-        dato = atencion(cola)
-        arribo(cola, dato)
+        dato = Cola.atencion(cola)
+        Cola.arribo(cola, dato)
         return dato
 
 
@@ -53,19 +56,38 @@ class Cola(object):
     def barrido(cola):
         """Muestra el contenido de una cola sin perder datos."""
         caux = Cola()
-        while(not cola_vacia(cola)):
-            dato = atencion(cola)
+        while(not Cola.cola_vacia(cola)):
+            dato = Cola.atencion(cola)
             print(dato)
-            arribo(caux,dato)
+            Cola.arribo(caux,dato)
 
-        while(not cola_vacia(caux)):
-            dato = atencion(cola)
-            arribo (cola,dato)
+        while(not Cola.cola_vacia(caux)):
+            dato = Cola.atencion(cola)
+            Cola.arribo (cola,dato)
 
     def barrido2(cola):
-        i = 0 
-        while(i < tamanio(cola)):
-            dato = mover_al_final(cola)
+        i = 0
+        while(i < Cola.tamanio(cola)):
+            dato = Cola.mover_al_final(cola)
             print(dato)
             i += 1
 
+
+
+
+cdatos = Cola()
+cvocales = Cola()
+letra= input("ingrese un caracter ")
+while (letra!= ""):
+    Cola.arribo(cdatos, letra)
+    letra = input( "Ingrese un caracter ")
+    
+while(not Cola.cola_vacia(cdatos)):
+    letra = Cola.atencion(cdatos)
+    if letra.upper() in ['A','E','I','O','U']:
+        Cola.arribo(cvocales ,letra)
+
+print('Datos cola vocales')
+while (not Cola.cola_vacia(cvocales)):
+    dato = Cola.atencion(cvocales)
+    print(dato)
